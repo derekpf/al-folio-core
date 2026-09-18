@@ -37,4 +37,10 @@ class AboutLayoutTest < Minitest::Test
 
     assert_includes layout, '<a href="{{ \'/experience/\' | relative_url }}" style="color: inherit"><strong>previous role</strong></a>'
   end
+
+  def test_right_profile_matches_project_spacing
+    styles = ROOT.join("_sass/_components.scss").read
+
+    assert_match(/\.profile\.float-right\s*\{\s*margin-left:\s*30px;\s*margin-top:\s*1rem;/, styles)
+  end
 end
