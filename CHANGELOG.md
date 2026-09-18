@@ -3,6 +3,7 @@
 ## 1.0.16 - 2026-09-18
 
 - Added reusable selected-project rendering to the about layout. Pages can set `selected_projects` to an ordered list of project slugs; missing slugs are skipped and the section stays hidden when the list is absent or empty.
+- Project overview cards and selected-project rows now use the `tagline` front-matter field for their short overview text. The field is not mapped to project detail-page descriptions or SEO metadata.
 
 ## 1.0.15 - 2026-08-03
 

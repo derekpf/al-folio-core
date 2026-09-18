@@ -39,8 +39,8 @@ class SelectedProjectsTest < Minitest::Test
       LIQUID
       File.write(File.join(source, "_includes", "selected_papers.liquid"), "<div class=\"selected-publication\">selected publication</div>\n")
 
-      write_project(source, "alpha", "Alpha Project", "alpha description", 0, "assets/img/alpha.png")
-      write_project(source, "beta", "Beta Project", "beta description", 1, "assets/img/beta.png")
+      write_project(source, "alpha", "Alpha Project", "alpha tagline", 0, "assets/img/alpha.png")
+      write_project(source, "beta", "Beta Project", "beta tagline", 1, "assets/img/beta.png")
 
       selection = if selected_projects == :omitted
                    ""
@@ -70,14 +70,14 @@ class SelectedProjectsTest < Minitest::Test
     end
   end
 
-  def write_project(source, slug, title, description, importance, image)
+  def write_project(source, slug, title, tagline, importance, image)
     File.write(File.join(source, "_projects", "#{slug}.md"), <<~MARKDOWN)
       ---
       layout: page
       title: #{title}
       importance: #{importance}
       img: #{image}
-      description: #{description}
+      tagline: #{tagline}
       ---
     MARKDOWN
   end
@@ -87,6 +87,8 @@ class SelectedProjectsTest < Minitest::Test
 
     assert_includes html, '<a href="/al-folio/projects/" style="color: inherit">selected projects</a>'
     assert_operator html.index("Beta Project"), :<, html.index("Alpha Project")
+    assert_includes html, "beta tagline"
+    refute_includes html, "beta description"
     refute_includes html, "Missing Project"
     assert_includes html, 'data-path="assets/img/beta.png"'
     assert_includes html, 'data-sizes="200px"'
