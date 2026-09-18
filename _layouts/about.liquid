@@ -60,7 +60,9 @@ layout: default
       {% assign experience_entries = site.data.cv.cv.sections.Experience | where_exp: 'entry', "entry.position contains 'Intern'" | al_cv_sort_by_date %}
       {% if experience_entries.size > 0 %}
         {% assign previous_role_entries = experience_entries | slice: 0, 1 %}
-        <h2 class="previous-role-heading"><strong>previous role</strong></h2>
+        <h2 class="previous-role-heading">
+          <a href="{{ '/experience/' | relative_url }}" style="color: inherit"><strong>previous role</strong></a>
+        </h2>
         {% assign entries = previous_role_entries %}
         {% include cv/experience.liquid %}
       {% endif %}

@@ -31,4 +31,10 @@ class AboutLayoutTest < Minitest::Test
     assert_includes footer, '<span class="font-weight-bold">{{ site.first_name }}</span>'
     assert_includes footer, '<span class="font-weight-bold">{{ site.last_name }}</span>'
   end
+
+  def test_previous_role_heading_links_to_experience_page
+    layout = ROOT.join("_layouts/about.liquid").read
+
+    assert_includes layout, '<a href="{{ \'/experience/\' | relative_url }}" style="color: inherit"><strong>previous role</strong></a>'
+  end
 end
