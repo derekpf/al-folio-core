@@ -8,10 +8,10 @@
     <head>
       {% include head.liquid %}
     </head>
-    <body class="{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
+    <body class="{% if page.url != '/' %}non-home-page {% endif %}{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
       {% include header.liquid %}
       <div class="container mt-5" role="main">
-        <h1>{{ page.title }}</h1>
+        <h1 class="post-title">{{ page.title }}</h1>
         <p>Distill rendering is unavailable. Enable <code>al_folio_distill</code> and set <code>al_folio.features.distill.enabled: true</code>.</p>
       </div>
       {% include footer.liquid %}
