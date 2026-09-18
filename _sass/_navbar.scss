@@ -106,6 +106,14 @@
 
   .navbar-brand {
     color: var(--global-text-color);
+
+    &.title {
+      font-weight: 400;
+
+      .font-weight-bold {
+        font-weight: 400;
+      }
+    }
   }
 
   .navbar-nav .nav-item .nav-link {

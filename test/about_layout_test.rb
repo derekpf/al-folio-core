@@ -32,6 +32,15 @@ class AboutLayoutTest < Minitest::Test
     assert_includes footer, '<span class="font-weight-bold">{{ site.last_name }}</span>'
   end
 
+  def test_site_identity_matches_section_heading_weight
+    blog_styles = ROOT.join("_sass/_blog.scss").read
+    navbar_styles = ROOT.join("_sass/_navbar.scss").read
+
+    assert_includes blog_styles, ".post-title {"
+    assert_includes blog_styles, "font-weight: 400;"
+    assert_includes navbar_styles, ".font-weight-bold {\n        font-weight: 400;\n      }"
+  end
+
   def test_previous_role_heading_links_to_experience_page
     layout = ROOT.join("_layouts/about.liquid").read
 
