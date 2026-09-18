@@ -288,6 +288,11 @@ Liquid::Template.register_filter(AlFolioCore::Filters::HideCustomBibtex)
 Liquid::Template.register_filter(AlFolioCore::Filters::CleanString)
 
 Jekyll::Hooks.register :site, :after_init do |site|
+  # Jekyll loads plugins from the site's configured plugin list after the core
+  # gem is required. Patch Terser here as well as at load time so theme-owned
+  # JavaScript is not replaced with a JSFile rooted at the starter source.
+  AlFolioCore.patch_jekyll_terser_for_theme_assets!
+
   AlFolioCore.config_contract_violations(site).each do |violation|
     Jekyll.logger.warn("al_folio_core:", violation)
   end
