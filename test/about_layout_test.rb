@@ -19,4 +19,16 @@ class AboutLayoutTest < Minitest::Test
     assert_operator profile_start, :<, subtitle_start
     assert_operator subtitle_start, :<, article_start
   end
+
+  def test_site_name_uses_matching_bold_markup
+    about_layout = ROOT.join("_layouts/about.liquid").read
+    header = ROOT.join("_includes/header.liquid").read
+    footer = ROOT.join("_includes/footer.liquid").read
+
+    assert_includes about_layout, '<span class="font-weight-bold">{{ site.first_name }}</span>'
+    assert_includes about_layout, '<span class="font-weight-bold">{{ site.last_name }}</span>'
+    assert_includes header, "<span class=\"font-weight-bold\">\n                {{- site.last_name -}}\n              </span>"
+    assert_includes footer, '<span class="font-weight-bold">{{ site.first_name }}</span>'
+    assert_includes footer, '<span class="font-weight-bold">{{ site.last_name }}</span>'
+  end
 end
