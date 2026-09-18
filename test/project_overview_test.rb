@@ -7,7 +7,7 @@ require "tmpdir"
 
 class ProjectOverviewTest < Minitest::Test
   CARD_INCLUDES = %w[projects.liquid projects_horizontal.liquid].freeze
-  PROJECT_OVERVIEW_INCLUDES = (CARD_INCLUDES + ["selected_projects.liquid"]).freeze
+  PROJECT_OVERVIEW_INCLUDES = (CARD_INCLUDES + ["project_highlights.liquid"]).freeze
 
   def render_overviews
     Dir.mktmpdir("al-folio-project-overviews-") do |source|
@@ -19,6 +19,7 @@ class ProjectOverviewTest < Minitest::Test
       CARD_INCLUDES.each do |include_name|
         FileUtils.cp(ROOT.join("_includes", include_name), File.join(source, "_includes", include_name))
       end
+      FileUtils.cp(ROOT.join("_includes", "project_highlights.liquid"), File.join(source, "_includes", "project_highlights.liquid"))
 
       File.write(File.join(source, "_config.yml"), <<~YAML)
         collections:
@@ -43,6 +44,8 @@ class ProjectOverviewTest < Minitest::Test
         {% assign project = site.projects | first %}
         {% include projects.liquid %}
         {% include projects_horizontal.liquid %}
+        {% assign projects = site.projects %}
+        {% include project_highlights.liquid projects=projects %}
       MARKDOWN
 
       config = Jekyll.configuration(
@@ -56,10 +59,10 @@ class ProjectOverviewTest < Minitest::Test
     end
   end
 
-  def test_grid_and_horizontal_project_cards_render_the_tagline
+  def test_grid_horizontal_and_highlight_project_templates_render_the_tagline
     html = render_overviews
 
-    assert_equal 2, html.scan("Short project overview").length
+    assert_equal 3, html.scan("Short project overview").length
     refute_includes html, "Legacy project description"
   end
 
@@ -69,6 +72,7 @@ class ProjectOverviewTest < Minitest::Test
 
       assert_includes template, "project.tagline"
       refute_includes template, "project.description"
+      refute_includes template, "selected_projects"
     end
   end
 end

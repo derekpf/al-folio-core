@@ -56,12 +56,15 @@ layout: default
       {% include latest_posts.liquid %}
     {% endif %}
 
-    <!-- Selected projects -->
-    {% if page.selected_projects and page.selected_projects.size > 0 %}
-      <h2>
-        <a href="{{ '/projects/' | relative_url }}" style="color: inherit">selected projects</a>
-      </h2>
-      {% include selected_projects.liquid %}
+    <!-- Project highlights -->
+    {% if page.project_highlights %}
+      {% assign highlighted_projects = site.projects | where: 'highlight', true | sort: 'date' | reverse %}
+      {% if highlighted_projects.size > 0 %}
+        <h2>
+          <a href="{{ '/projects/' | relative_url }}" style="color: inherit">project highlights</a>
+        </h2>
+        {% include project_highlights.liquid projects=highlighted_projects %}
+      {% endif %}
     {% endif %}
 
     <!-- Selected papers -->
