@@ -60,9 +60,7 @@ layout: default
     {% if page.project_highlights %}
       {% assign highlighted_projects = site.projects | where: 'highlight', true | sort: 'date' | reverse %}
       {% if highlighted_projects.size > 0 %}
-        <h2>
-          <a href="{{ '/projects/' | relative_url }}" style="color: inherit">project highlights</a>
-        </h2>
+        <h2>project highlights</h2>
         {% include project_highlights.liquid projects=highlighted_projects %}
       {% endif %}
     {% endif %}

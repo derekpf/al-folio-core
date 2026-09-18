@@ -82,7 +82,8 @@ class ProjectHighlightsTest < Minitest::Test
   def test_highlighted_projects_are_discovered_and_sorted_newest_first
     html = render_page(project_highlights: true)
 
-    assert_includes html, '<a href="/al-folio/projects/" style="color: inherit">project highlights</a>'
+    assert_match(/<h2>\s*project highlights\s*<\/h2>/, html)
+    refute_includes html, 'href="/al-folio/projects/"'
     assert_operator html.index("Beta Project"), :<, html.index("Alpha Project")
     assert_includes html, "beta tagline"
     refute_includes html, "Gamma Project"

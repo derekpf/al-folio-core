@@ -5,6 +5,7 @@
 - Added reusable project highlights to the about layout. Pages can set `project_highlights: true`; projects with `highlight: true` are discovered automatically and sorted newest-first by `date`.
 - Project overview cards and project-highlight rows now use the `tagline` front-matter field for their short overview text. The field is not mapped to project detail-page descriptions or SEO metadata.
 - Fixed the theme JavaScript asset guard to run after Jekyll has loaded `jekyll-terser`, preserving runtime assets such as the dark-mode toggle script even when Bundler installs gems under the starter's `.bundle` directory.
+- Project highlights on the about page now use a plain heading; only the individual project rows link to project detail pages.
 
 ## 1.0.15 - 2026-08-03
 
