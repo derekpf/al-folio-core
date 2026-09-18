@@ -207,10 +207,14 @@ module AlFolioCore
     expanded_site_source = File.expand_path(site_source)
     return false unless expanded_asset_path.start_with?("#{expanded_site_source}#{File::SEPARATOR}")
 
-    # Bundler-installed gems can live under `<site>/vendor/bundle/**`.
-    # Treat those as external runtime assets, not local source overrides.
-    vendored_bundle_prefix = File.join(expanded_site_source, "vendor", "bundle") + File::SEPARATOR
-    return false if expanded_asset_path.start_with?(vendored_bundle_prefix)
+    # Bundler-installed gems can live under `<site>/vendor/bundle/**` or
+    # `<site>/.bundle/**`. Treat those as external runtime assets, not local
+    # source overrides.
+    bundle_prefixes = [
+      File.join(expanded_site_source, "vendor", "bundle") + File::SEPARATOR,
+      File.join(expanded_site_source, ".bundle") + File::SEPARATOR,
+    ]
+    return false if bundle_prefixes.any? { |prefix| expanded_asset_path.start_with?(prefix) }
 
     true
   end
