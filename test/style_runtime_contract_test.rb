@@ -8,6 +8,12 @@ class StyleRuntimeContractTest < Minitest::Test
     refute_match(/transition\s*:\s*all\s+/i, utilities_scss)
   end
 
+  def test_page_margins_reserve_a_stable_scrollbar_gutter
+    layout_scss = ROOT.join("_sass/_layout.scss").read
+
+    assert_includes layout_scss, "html {\n  scrollbar-gutter: stable;\n}"
+  end
+
   def test_tailwind_entry_contract
     tailwind_app_css = ROOT.join("assets/tailwind/app.css").read
 
