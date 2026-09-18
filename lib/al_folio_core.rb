@@ -83,7 +83,7 @@ module AlFolioCore
         next unless sf.kind_of?(Jekyll::StaticFile)
         next unless sf.path =~ /\.js$/
         next if sf.path.end_with?(".min.js")
-        next unless AlFolioCore.local_source_asset?(sf.path, site.source)
+        next unless AlFolioCore.local_source_asset?(sf.path, site.source, theme_root: site.theme&.root)
 
         puts "Terser: Minifying #{sf.path}"
         site.static_files.delete(sf)
@@ -202,10 +202,19 @@ module AlFolioCore
     end
   end
 
-  def local_source_asset?(asset_path, site_source)
+  def local_source_asset?(asset_path, site_source, theme_root: nil)
     expanded_asset_path = File.expand_path(asset_path)
     expanded_site_source = File.expand_path(site_source)
     return false unless expanded_asset_path.start_with?("#{expanded_site_source}#{File::SEPARATOR}")
+
+    # A path-based theme can live below the site's source directory (for
+    # example, in extern/al-folio-core). ThemeAssetsReader already publishes
+    # those files at /assets/...; do not re-root them under the subdirectory as
+    # if they were local source overrides.
+    if theme_root
+      expanded_theme_root = File.expand_path(theme_root)
+      return false if expanded_asset_path.start_with?("#{expanded_theme_root}#{File::SEPARATOR}")
+    end
 
     # Bundler-installed gems can live under `<site>/vendor/bundle/**` or
     # `<site>/.bundle/**`. Treat those as external runtime assets, not local
