@@ -120,8 +120,10 @@
   <link rel="apple-touch-icon" href="{{ apple_touch_icon_url }}">
 {% endif %}
 <link rel="stylesheet" href="{{ '/assets/css/main.css' | relative_url | bust_css_cache }}">
-{% if page.layout == 'cv' and site.plugins contains 'al_folio_cv' and site.al_folio.features.cv.enabled != false %}
-  <link rel="stylesheet" href="{{ '/assets/css/al-folio-cv.css' | relative_url | bust_file_cache }}">
+{% if page.layout == 'cv' or page.cv %}
+  {% if site.plugins contains 'al_folio_cv' and site.al_folio.features.cv.enabled != false %}
+    <link rel="stylesheet" href="{{ '/assets/css/al-folio-cv.css' | relative_url | bust_file_cache }}">
+  {% endif %}
 {% endif %}
 <link rel="canonical" href="{{ page.url | replace:'index.html','' | absolute_url }}">
 
