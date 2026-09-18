@@ -1,5 +1,9 @@
 # Changelog
 
+## 1.0.16 - 2026-09-18
+
+- Added reusable selected-project rendering to the about layout. Pages can set `selected_projects` to an ordered list of project slugs; missing slugs are skipped and the section stays hidden when the list is absent or empty.
+
 ## 1.0.15 - 2026-08-03
 
 - Fixed text colour staggering when switching between light and dark themes, which read as a flicker. `color`, `fill` and `stroke` are inherited properties, but the theme-transition rule applied them to `html.transition *`, so every inheriting element ran its own 240ms ease toward a parent whose colour was still animating — convergence compounded once per level of nesting, and deeper text landed visibly later before snapping when the class was removed. Measured on the about page, an `h2 > a` sat at `rgb(50,50,50)` while the paragraph beside it was already at `rgb(130,130,130)`. Those properties are now transitioned once, on the root and on `body`; non-inherited properties keep their per-element transitions. Text now changes uniformly rather than in waves.
