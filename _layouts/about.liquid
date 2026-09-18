@@ -43,7 +43,7 @@ layout: default
     <!-- News -->
     {% if page.announcements and page.announcements.enabled %}
       <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit">news</a>
+        <a href="{{ '/news/' | relative_url }}" style="color: inherit"><strong>news</strong></a>
       </h2>
       {% include news.liquid limit=true %}
     {% endif %}
@@ -51,16 +51,27 @@ layout: default
     <!-- Latest posts -->
     {% if page.latest_posts and page.latest_posts.enabled %}
       <h2>
-        <a href="{{ '/blog/' | relative_url }}" style="color: inherit">latest posts</a>
+        <a href="{{ '/blog/' | relative_url }}" style="color: inherit"><strong>latest posts</strong></a>
       </h2>
       {% include latest_posts.liquid %}
+    {% endif %}
+
+    <!-- Previous role -->
+    {% if site.plugins contains 'al_folio_cv' and site.al_folio.features.cv.enabled != false and site.data.cv and site.data.cv.cv and site.data.cv.cv.sections.Experience %}
+      {% assign experience_entries = site.data.cv.cv.sections.Experience | al_cv_sort_by_date %}
+      {% if experience_entries.size > 0 %}
+        {% assign previous_role_entries = experience_entries | slice: 0, 1 %}
+        <h2><strong>previous role</strong></h2>
+        {% assign entries = previous_role_entries %}
+        {% include cv/experience.liquid %}
+      {% endif %}
     {% endif %}
 
     <!-- Project highlights -->
     {% if page.project_highlights %}
       {% assign highlighted_projects = site.projects | where: 'highlight', true | sort: 'date' | reverse %}
       {% if highlighted_projects.size > 0 %}
-        <h2>project highlights</h2>
+        <h2><strong>project highlights</strong></h2>
         {% include project_highlights.liquid projects=highlighted_projects %}
       {% endif %}
     {% endif %}
@@ -68,7 +79,7 @@ layout: default
     <!-- Selected papers -->
     {% if page.selected_papers %}
       <h2>
-        <a href="{{ '/publications/' | relative_url }}" style="color: inherit">selected publications</a>
+        <a href="{{ '/publications/' | relative_url }}" style="color: inherit"><strong>selected publications</strong></a>
       </h2>
       {% include selected_papers.liquid %}
     {% endif %}
