@@ -58,7 +58,7 @@ layout: default
 
     <!-- Previous role -->
     {% if site.plugins contains 'al_folio_cv' and site.al_folio.features.cv.enabled != false and site.data.cv and site.data.cv.cv and site.data.cv.cv.sections.Experience %}
-      {% assign experience_entries = site.data.cv.cv.sections.Experience | al_cv_sort_by_date %}
+      {% assign experience_entries = site.data.cv.cv.sections.Experience | where_exp: 'entry', "entry.position contains 'Intern'" | al_cv_sort_by_date %}
       {% if experience_entries.size > 0 %}
         {% assign previous_role_entries = experience_entries | slice: 0, 1 %}
         <h2><strong>previous role</strong></h2>
