@@ -101,12 +101,27 @@ class DescriptionBorderTest < Minitest::Test
 
     refute_nil search_declaration
     assert_includes search_declaration, "background-color: var(--global-bg-color);"
+    assert_includes search_declaration, "color: var(--global-text-color);"
+    assert_includes search_declaration, "caret-color: var(--global-text-color);"
     assert_includes search_declaration, "border: 1px solid var(--global-divider-color);"
     assert_includes search_declaration, "0 2px 5px 0 rgba(0, 0, 0, 0.16),"
     assert_includes search_declaration, "0 2px 10px 0 rgba(0, 0, 0, 0.12);"
     assert_includes search_declaration, "border-color 0.2s ease,"
     assert_includes search_declaration, "box-shadow 0.2s ease;"
     assert_includes ROOT.join("_includes/bib_search.liquid").read, 'class="search bibsearch-form-input"'
+  end
+
+  def test_paired_thumbnail_and_date_columns_use_half_gutters
+    styles = ROOT.join("_sass/_utilities.scss").read
+
+    assert_includes styles, ".row > .abbr,"
+    assert_includes styles, ".row > .date-column,"
+    assert_includes styles, ".row > .experience-location-column {"
+    assert_includes styles, "padding-right: 7.5px;"
+    assert_includes styles, ".row > .abbr + [class*='col-'],"
+    assert_includes styles, ".row > .date-column + [class*='col-'],"
+    assert_includes styles, ".row > .experience-location-column + .experience-details {"
+    assert_includes styles, "padding-left: 7.5px;"
   end
 
   def test_publication_and_project_renderers_use_the_shared_wrapper

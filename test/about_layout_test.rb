@@ -48,6 +48,15 @@ class AboutLayoutTest < Minitest::Test
     refute_includes header, '<a class="navbar-brand title font-weight-lighter" href='
   end
 
+  def test_about_navigation_uses_the_about_layout_identity
+    header = ROOT.join("_includes/header.liquid").read
+
+    assert_includes header, "{% if page.layout == 'about' %}"
+    assert_includes header, "{% if p.layout == 'about' %}"
+    assert_includes header, "{% assign about_url = p.url %}"
+    refute_includes header, "page.permalink == '/'"
+  end
+
   def test_navbar_brand_uses_the_section_link_hover_color
     navbar_styles = ROOT.join("_sass/_navbar.scss").read
 

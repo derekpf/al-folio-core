@@ -8,8 +8,8 @@ class PageTitleTest < Minitest::Test
     distill_layout = ROOT.join("_layouts/distill.liquid").read
     styles = ROOT.join("_sass/_blog.scss").read
 
-    assert_includes default_layout, '{% if page.url != \'/\' %}non-home-page {% endif %}'
-    assert_includes distill_layout, '{% if page.url != \'/\' %}non-home-page {% endif %}'
+    assert_includes default_layout, "{% unless page.layout == 'about' %}non-home-page {% endunless %}"
+    assert_includes distill_layout, "{% unless page.layout == 'about' %}non-home-page {% endunless %}"
     assert_includes distill_layout, '<h1 class="post-title">{{ page.title }}</h1>'
     assert_includes styles, "body.non-home-page .post-title {\n  font-weight: 400;\n  text-transform: capitalize;\n}"
   end

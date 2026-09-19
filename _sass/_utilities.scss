@@ -113,6 +113,20 @@ img:focus-visible,
   padding-bottom: 0;
 }
 
+// Keep paired thumbnails/date-location boxes close to their descriptions while
+// preserving the grid's outer alignment.
+.row > .abbr,
+.row > .date-column,
+.row > .experience-location-column {
+  padding-right: 7.5px;
+}
+
+.row > .abbr + [class*='col-'],
+.row > .date-column + [class*='col-'],
+.row > .experience-location-column + .experience-details {
+  padding-left: 7.5px;
+}
+
 // Code and syntax highlighting
 
 figure.highlight {
@@ -577,6 +591,8 @@ table[data-toggle="table"].af-table-enhanced tbody tr.af-row-selected {
 
 .bibsearch-form-input {
   background-color: var(--global-bg-color);
+  color: var(--global-text-color);
+  caret-color: var(--global-text-color);
   border: 1px solid var(--global-divider-color);
   box-shadow:
     0 2px 5px 0 rgba(0, 0, 0, 0.16),

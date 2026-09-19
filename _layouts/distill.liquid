@@ -8,7 +8,7 @@
     <head>
       {% include head.liquid %}
     </head>
-    <body class="{% if page.url != '/' %}non-home-page {% endif %}{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
+    <body class="{% unless page.layout == 'about' %}non-home-page {% endunless %}{% if site.navbar_fixed %}fixed-top-nav{% endif %} {% unless site.footer_fixed %}sticky-bottom-footer{% endunless %}">
       {% include header.liquid %}
       <div class="container mt-5" role="main">
         <h1 class="post-title">{{ page.title }}</h1>
