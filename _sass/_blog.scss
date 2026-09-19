@@ -219,6 +219,10 @@ body:not(.non-home-page) {
   padding-top: 3rem;
 }
 
+.about-section > .about-section-heading + .publications {
+  margin-top: 22.5px;
+}
+
 .about-section-heading {
   margin-top: 0;
   text-transform: capitalize;

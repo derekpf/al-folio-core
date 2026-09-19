@@ -73,10 +73,7 @@ class DescriptionBorderTest < Minitest::Test
     assert_includes image_declaration, "0 2px 10px 0 rgba(0, 0, 0, 0.12);"
     assert_includes image_declaration, "border-color 0.2s ease,"
     assert_includes image_declaration, "box-shadow 0.2s ease;"
-    hover_declaration = styles[/\.description-border:hover,\n\.description-border:focus-within,\nimg:hover,\nimg:focus-visible,\n\.bibsearch-form-input:hover,\n\.bibsearch-form-input:focus-visible \{(.*?)\n\}/m, 1]
-
-    refute_nil hover_declaration
-    assert_includes hover_declaration, "border-color: var(--global-hover-color);"
+    assert_includes styles, "border-color: var(--global-hover-color);"
     assert_includes styles, "img:hover"
     assert_includes styles, "img:focus-visible"
     assert_includes styles, ".bibsearch-form-input:hover"
@@ -111,17 +108,43 @@ class DescriptionBorderTest < Minitest::Test
     assert_includes ROOT.join("_includes/bib_search.liquid").read, 'class="search bibsearch-form-input"'
   end
 
-  def test_paired_thumbnail_and_date_columns_use_half_gutters
+  def test_paired_thumbnail_and_date_columns_use_scaled_gutters
     styles = ROOT.join("_sass/_utilities.scss").read
 
     assert_includes styles, ".row > .abbr,"
     assert_includes styles, ".row > .date-column,"
     assert_includes styles, ".row > .experience-location-column {"
-    assert_includes styles, "padding-right: 7.5px;"
+    assert_includes styles, "padding-right: 5.625px;"
     assert_includes styles, ".row > .abbr + [class*='col-'],"
     assert_includes styles, ".row > .date-column + [class*='col-'],"
     assert_includes styles, ".row > .experience-location-column + .experience-details {"
-    assert_includes styles, "padding-left: 7.5px;"
+    assert_includes styles, "padding-left: 5.625px;"
+  end
+
+  def test_stacked_paired_columns_restore_symmetric_outer_padding
+    styles = ROOT.join("_sass/_utilities.scss").read
+
+    assert_includes styles, "@media (max-width: 575.98px)"
+    assert_includes styles, "padding-right: 15px;"
+    assert_includes styles, "padding-left: 15px;"
+    assert_includes styles, "margin-top: 11.25px;"
+    assert_includes styles, ".row > .abbr > figure"
+    assert_includes styles, ".row > .experience-location-column > .description-border"
+  end
+
+  def test_paired_components_share_the_hover_animation
+    styles = ROOT.join("_sass/_utilities.scss").read
+
+    assert_includes styles, ".row > .abbr:is(:hover, :focus-within) + [class*='col-'] > .description-border"
+    assert_includes styles, ".row > .abbr:has(+ [class*='col-'] > .description-border:is(:hover, :focus-within)) img"
+    assert_includes styles, ".row > .date-column:has(+ [class*='col-'] > .description-border:is(:hover, :focus-within)) .description-border"
+    assert_includes styles, ".row > .experience-location-column:has(+ .experience-details > .description-border:is(:hover, :focus-within)) .description-border"
+    assert_includes styles, ".row > .experience-location-column:has(+ .experience-details > .description-border:is(:hover, :focus-within)) .experience-location-text"
+    assert_includes styles, ".row:has(> .abbr + [class*='col-']):is(:hover, :focus-within) > .abbr img"
+    assert_includes styles, ".row:has(> .abbr + [class*='col-']):is(:hover, :focus-within) > [class*='col-'] > .description-border"
+    assert_includes styles, ".row:has(> .date-column + [class*='col-']):is(:hover, :focus-within) > .date-column > .description-border"
+    assert_includes styles, ".row:has(> .experience-location-column + .experience-details):is(:hover, :focus-within) > .experience-location-column > .description-border"
+    assert_includes styles, ".row:has(> .experience-location-column + .experience-details):is(:hover, :focus-within) > .experience-location-column .experience-location-text"
   end
 
   def test_publication_and_project_renderers_use_the_shared_wrapper

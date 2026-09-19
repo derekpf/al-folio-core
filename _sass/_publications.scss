@@ -37,7 +37,11 @@
     margin-top: 0;
 
     li {
-      margin-bottom: 1rem;
+      margin-bottom: 0;
+
+      & + li {
+        margin-top: 22.5px;
+      }
 
       .preview {
         display: inline-block;
@@ -52,7 +56,11 @@
       }
 
       .abbr {
-        margin-bottom: 0.5rem;
+        margin-bottom: 0;
+
+        > figure {
+          margin-bottom: 0;
+        }
 
         abbr {
           display: inline-block;
@@ -187,6 +195,12 @@
     div.award.hidden.open {
       border-color: var(--global-highlight-color);
     }
+  }
+}
+
+@media (min-width: 576px) {
+  .publications ol.bibliography li:not(:last-child) .description-border {
+    margin-bottom: 0.25rem;
   }
 }
 

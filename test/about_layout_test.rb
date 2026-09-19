@@ -78,6 +78,25 @@ class AboutLayoutTest < Minitest::Test
     refute_includes blog_styles, "project-highlights-heading"
   end
 
+  def test_about_publication_sections_use_twice_the_paired_entry_gap
+    blog_styles = ROOT.join("_sass/_blog.scss").read
+    publication_styles = ROOT.join("_sass/_publications.scss").read
+
+    assert_includes blog_styles, ".about-section > .about-section-heading + .publications {\n  margin-top: 22.5px;\n}"
+    assert_includes publication_styles, "margin-bottom: 0;"
+    assert_includes publication_styles, "& + li {\n        margin-top: 22.5px;\n      }"
+    assert_includes publication_styles, "> figure {\n          margin-bottom: 0;\n        }"
+    assert_includes publication_styles, "@media (min-width: 576px) {\n  .publications ol.bibliography li:not(:last-child) .description-border {\n    margin-bottom: 0.25rem;\n  }\n}"
+  end
+
+  def test_profile_moves_above_the_title_on_portrait_layouts
+    component_styles = ROOT.join("_sass/_components.scss").read
+
+    assert_includes component_styles, "@media (max-width: 575.98px)"
+    assert_includes component_styles, ".post-header:has(> .profile) {\n    display: flex;\n    flex-direction: column;\n  }"
+    assert_includes component_styles, ".post-header:has(> .profile) > .profile {\n    order: -1;\n    float: none !important;\n    margin: 0 0 1rem;\n  }"
+  end
+
   def test_about_page_title_and_subtitle_use_requested_weight_and_scale
     blog_styles = ROOT.join("_sass/_blog.scss").read
 

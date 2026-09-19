@@ -114,6 +114,19 @@ ul.task-list input[type="checkbox"] {
   }
 }
 
+@media (max-width: 575.98px) {
+  .post-header:has(> .profile) {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-header:has(> .profile) > .profile {
+    order: -1;
+    float: none !important;
+    margin: 0 0 1rem;
+  }
+}
+
 // CV
 
 .cv {

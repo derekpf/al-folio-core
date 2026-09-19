@@ -37,14 +37,43 @@
 img:hover,
 img:focus-visible,
 .bibsearch-form-input:hover,
-.bibsearch-form-input:focus-visible {
+.bibsearch-form-input:focus-visible,
+.row > .abbr:is(:hover, :focus-within) + [class*='col-'] > .description-border,
+.row > .date-column:is(:hover, :focus-within) + [class*='col-'] > .description-border,
+.row > .experience-location-column:is(:hover, :focus-within) + .experience-details > .description-border,
+.row > .abbr:has(+ [class*='col-'] > .description-border:is(:hover, :focus-within)) img,
+.row > .date-column:has(+ [class*='col-'] > .description-border:is(:hover, :focus-within)) .description-border,
+.row > .experience-location-column:has(+ .experience-details > .description-border:is(:hover, :focus-within)) .description-border,
+.row:has(> .abbr + [class*='col-']):is(:hover, :focus-within) > .abbr img,
+.row:has(> .abbr + [class*='col-']):is(:hover, :focus-within) > [class*='col-'] > .description-border,
+.row:has(> .date-column + [class*='col-']):is(:hover, :focus-within) > .date-column > .description-border,
+.row:has(> .date-column + [class*='col-']):is(:hover, :focus-within) > [class*='col-'] > .description-border,
+.row:has(> .experience-location-column + .experience-details):is(:hover, :focus-within) > .experience-location-column > .description-border,
+.row:has(> .experience-location-column + .experience-details):is(:hover, :focus-within) > .experience-details > .description-border {
   border-color: var(--global-hover-color);
 }
 
 .description-border:hover .description-title,
 .description-border:hover .description-title *,
 .description-border:focus-within .description-title,
-.description-border:focus-within .description-title * {
+.description-border:focus-within .description-title *,
+.row > .abbr:is(:hover, :focus-within) + [class*='col-'] > .description-border .description-title,
+.row > .abbr:is(:hover, :focus-within) + [class*='col-'] > .description-border .description-title *,
+.row > .date-column:is(:hover, :focus-within) + [class*='col-'] > .description-border .description-title,
+.row > .date-column:is(:hover, :focus-within) + [class*='col-'] > .description-border .description-title *,
+.row > .experience-location-column:is(:hover, :focus-within) + .experience-details > .description-border .description-title,
+.row > .experience-location-column:is(:hover, :focus-within) + .experience-details > .description-border .description-title *,
+.row:has(> .abbr + [class*='col-']):is(:hover, :focus-within) > [class*='col-'] > .description-border .description-title,
+.row:has(> .abbr + [class*='col-']):is(:hover, :focus-within) > [class*='col-'] > .description-border .description-title *,
+.row:has(> .date-column + [class*='col-']):is(:hover, :focus-within) > [class*='col-'] > .description-border .description-title,
+.row:has(> .date-column + [class*='col-']):is(:hover, :focus-within) > [class*='col-'] > .description-border .description-title *,
+.row:has(> .experience-location-column + .experience-details):is(:hover, :focus-within) > .experience-details > .description-border .description-title,
+.row:has(> .experience-location-column + .experience-details):is(:hover, :focus-within) > .experience-details > .description-border .description-title * {
+  color: var(--global-hover-color);
+}
+
+.row > .experience-location-column:has(+ .experience-details > .description-border:is(:hover, :focus-within)) .experience-location-text,
+.row:has(> .experience-location-column + .experience-details):is(:hover, :focus-within) > .experience-location-column .experience-location-text {
   color: var(--global-hover-color);
 }
 
@@ -71,7 +100,19 @@ img.medium-zoom-image {
 img:hover,
 img:focus-visible,
 .bibsearch-form-input:hover,
-.bibsearch-form-input:focus-visible {
+.bibsearch-form-input:focus-visible,
+.row > .abbr:is(:hover, :focus-within) + [class*='col-'] > .description-border,
+.row > .date-column:is(:hover, :focus-within) + [class*='col-'] > .description-border,
+.row > .experience-location-column:is(:hover, :focus-within) + .experience-details > .description-border,
+.row > .abbr:has(+ [class*='col-'] > .description-border:is(:hover, :focus-within)) img,
+.row > .date-column:has(+ [class*='col-'] > .description-border:is(:hover, :focus-within)) .description-border,
+.row > .experience-location-column:has(+ .experience-details > .description-border:is(:hover, :focus-within)) .description-border,
+.row:has(> .abbr + [class*='col-']):is(:hover, :focus-within) > .abbr img,
+.row:has(> .abbr + [class*='col-']):is(:hover, :focus-within) > [class*='col-'] > .description-border,
+.row:has(> .date-column + [class*='col-']):is(:hover, :focus-within) > .date-column > .description-border,
+.row:has(> .date-column + [class*='col-']):is(:hover, :focus-within) > [class*='col-'] > .description-border,
+.row:has(> .experience-location-column + .experience-details):is(:hover, :focus-within) > .experience-location-column > .description-border,
+.row:has(> .experience-location-column + .experience-details):is(:hover, :focus-within) > .experience-details > .description-border {
   box-shadow:
     0 2px 5px 0 rgba(0, 0, 0, 0.16),
     0 2px 10px 0 rgba(0, 0, 0, 0.12),
@@ -118,13 +159,57 @@ img:focus-visible,
 .row > .abbr,
 .row > .date-column,
 .row > .experience-location-column {
-  padding-right: 7.5px;
+  padding-right: 5.625px;
 }
 
 .row > .abbr + [class*='col-'],
 .row > .date-column + [class*='col-'],
 .row > .experience-location-column + .experience-details {
-  padding-left: 7.5px;
+  padding-left: 5.625px;
+}
+
+@media (max-width: 575.98px) {
+  .row > .abbr,
+  .row > .date-column,
+  .row > .experience-location-column {
+    padding-right: 15px;
+  }
+
+  .row > .abbr + [class*='col-'],
+  .row > .date-column + [class*='col-'],
+  .row > .experience-location-column + .experience-details {
+    padding-left: 15px;
+  }
+
+  .row > .abbr,
+  .row > .date-column,
+  .row > .experience-location-column {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 0 !important;
+  }
+
+  .row > .abbr > figure {
+    width: 100%;
+    margin-bottom: 0;
+  }
+
+  .row > .experience-location-column > .description-border {
+    margin: 0;
+  }
+
+  .row > .abbr + [class*='col-'],
+  .row > .date-column + [class*='col-'],
+  .row > .experience-location-column + .experience-details {
+    margin-top: 11.25px;
+  }
+
+  .row > .abbr + [class*='col-'] > .description-border,
+  .row > .date-column + [class*='col-'] > .description-border,
+  .row > .experience-location-column + .experience-details > .description-border {
+    margin-top: 0;
+  }
 }
 
 // Code and syntax highlighting
