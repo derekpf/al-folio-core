@@ -196,10 +196,18 @@ module AlFolioCore
   end
 
   def bundler_gem_asset_paths(relative_asset_path)
-    Gem.path.flat_map do |gem_path|
+    loaded_gem_assets = Gem.loaded_specs.values.filter_map do |spec|
+      next unless spec.respond_to?(:full_gem_path)
+
+      Dir[File.join(spec.full_gem_path, relative_asset_path)]
+    end.flatten
+
+    installed_gem_assets = Gem.path.flat_map do |gem_path|
       Dir[File.join(gem_path, "bundler", "gems", "*", relative_asset_path)] +
         Dir[File.join(gem_path, "gems", "*", relative_asset_path)]
     end
+
+    (loaded_gem_assets + installed_gem_assets).uniq
   end
 
   def local_source_asset?(asset_path, site_source, theme_root: nil)

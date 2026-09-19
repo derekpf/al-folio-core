@@ -98,6 +98,21 @@ class ThemeRuntimeGuardTest < Minitest::Test
     end
   end
 
+  def test_bundler_gem_asset_paths_supports_loaded_path_gems
+    Dir.mktmpdir do |tmp_dir|
+      asset_path = File.join(tmp_dir, "assets/css/al-folio-cv.css")
+      FileUtils.mkdir_p(File.dirname(asset_path))
+      File.write(asset_path, "/* path gem */")
+
+      loaded_specs = Gem.loaded_specs
+      loaded_specs["test_path_gem"] = Struct.new(:full_gem_path).new(tmp_dir)
+
+      assert_includes AlFolioCore.bundler_gem_asset_paths("assets/css/al-folio-cv.css"), asset_path
+    ensure
+      loaded_specs&.delete("test_path_gem")
+    end
+  end
+
   def test_wrapper_layouts_delegate_to_plugin_includes
     cv_layout = ROOT.join("_layouts/cv.liquid").read
     distill_layout = ROOT.join("_layouts/distill.liquid").read
