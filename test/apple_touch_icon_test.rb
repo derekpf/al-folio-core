@@ -29,7 +29,7 @@ class AppleTouchIconTest < Minitest::Test
   HEAD = File.read(ROOT.join("_includes", "head.liquid").to_s, encoding: "UTF-8")
              .gsub(/\{%-?\s*include .*?-?%\}/m, "")
 
-  EMOJI_ICON = "⚛️" # the template default: an atom emoji
+  EMOJI_ICON = "🤖" # the template default: a robot emoji
 
   def render(site)
     Liquid::Template.parse(HEAD).render({ "site" => site, "page" => {} }, filters: [StubUrlFilters])

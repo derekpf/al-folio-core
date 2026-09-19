@@ -41,18 +41,22 @@ layout: default
 
     <!-- News -->
     {% if page.announcements and page.announcements.enabled %}
-      <h2>
-        <a href="{{ '/news/' | relative_url }}" style="color: inherit"><strong>news</strong></a>
-      </h2>
-      {% include news.liquid limit=true %}
+      <section class="about-section">
+        <h2 class="about-section-heading">
+          <a href="{{ '/news/' | relative_url }}" style="color: inherit"><strong>news</strong></a>
+        </h2>
+        {% include news.liquid limit=true %}
+      </section>
     {% endif %}
 
     <!-- Latest posts -->
     {% if page.latest_posts and page.latest_posts.enabled %}
-      <h2>
-        <a href="{{ '/blog/' | relative_url }}" style="color: inherit"><strong>latest posts</strong></a>
-      </h2>
-      {% include latest_posts.liquid %}
+      <section class="about-section">
+        <h2 class="about-section-heading">
+          <a href="{{ '/blog/' | relative_url }}" style="color: inherit"><strong>latest posts</strong></a>
+        </h2>
+        {% include latest_posts.liquid %}
+      </section>
     {% endif %}
 
     <!-- Previous role -->
@@ -60,11 +64,13 @@ layout: default
       {% assign experience_entries = site.data.cv.cv.sections.Experience | where_exp: 'entry', "entry.position contains 'Intern'" | al_cv_sort_by_date %}
       {% if experience_entries.size > 0 %}
         {% assign previous_role_entries = experience_entries | slice: 0, 1 %}
-        <h2 class="previous-role-heading">
-          <a href="{{ '/experience/' | relative_url }}" style="color: inherit"><strong>previous role</strong></a>
-        </h2>
-        {% assign entries = previous_role_entries %}
-        {% include cv/experience.liquid %}
+        <section class="about-section">
+          <h2 class="about-section-heading previous-role-heading">
+            <a href="{{ '/experience/' | relative_url }}" style="color: inherit"><strong>previous role</strong></a>
+          </h2>
+          {% assign entries = previous_role_entries %}
+          {% include cv/experience.liquid %}
+        </section>
       {% endif %}
     {% endif %}
 
@@ -72,17 +78,21 @@ layout: default
     {% if page.project_highlights %}
       {% assign highlighted_projects = site.projects | where: 'highlight', true | sort: 'date' | reverse %}
       {% if highlighted_projects.size > 0 %}
-        <h2><strong>project highlights</strong></h2>
-        {% include project_highlights.liquid projects=highlighted_projects %}
+        <section class="about-section">
+          <h2 class="about-section-heading"><strong>project highlights</strong></h2>
+          {% include project_highlights.liquid projects=highlighted_projects %}
+        </section>
       {% endif %}
     {% endif %}
 
     <!-- Selected papers -->
     {% if page.selected_papers %}
-      <h2>
-        <a href="{{ '/publications/' | relative_url }}" style="color: inherit"><strong>selected publications</strong></a>
-      </h2>
-      {% include selected_papers.liquid %}
+      <section class="about-section">
+        <h2 class="about-section-heading">
+          <a href="{{ '/publications/' | relative_url }}" style="color: inherit"><strong>selected publications</strong></a>
+        </h2>
+        {% include selected_papers.liquid %}
+      </section>
     {% endif %}
 
     <!-- Social -->

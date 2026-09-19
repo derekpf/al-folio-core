@@ -45,6 +45,7 @@
 
 body.non-home-page .post-title {
   font-weight: 400;
+  text-transform: capitalize;
 }
 
 .post-list {
@@ -201,8 +202,42 @@ body.non-home-page .post-title {
   margin-bottom: 2rem;
 }
 
-.post > article > h2 {
-  margin-top: 2rem;
+body:not(.non-home-page) {
+  .post-title,
+  .post-title .font-weight-bold {
+    font-weight: 400;
+  }
+
+  .desc {
+    font-weight: 300;
+    font-size: 1.2rem;
+  }
+}
+
+.about-section {
+  display: flow-root;
+  padding-top: 3rem;
+}
+
+.about-section-heading {
+  margin-top: 0;
+  text-transform: capitalize;
+  transition: color 0.1s ease-in-out;
+
+  a,
+  strong {
+    color: inherit;
+  }
+
+  &:hover {
+    color: var(--global-hover-color);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-section-heading {
+    transition: none;
+  }
 }
 
 .post-description {

@@ -63,8 +63,9 @@
 
   <!-- Entry bib key -->
   <div id="{{ entry.key }}" class="{% if site.enable_publication_thumbnails %}col-sm-8{% else %}col-sm-10{% endif %}">
+    <div class="description-border">
     <!-- Title -->
-    <div class="title">{{ entry.title }}</div>
+    <div class="title description-title">{{ entry.title }}</div>
     <!-- Author -->
     <div class="author">
       {% assign author_array_size = entry.author_array | size %}
@@ -407,5 +408,6 @@
         <div style="text-align: center;">{% include video.liquid path=entry.video class="img-fluid rounded z-depth-1" controls=true %}</div>
       </div>
     {% endif %}
+    </div>
   </div>
 </div>

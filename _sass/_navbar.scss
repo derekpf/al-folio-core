@@ -113,6 +113,10 @@
       .font-weight-bold {
         font-weight: 400;
       }
+
+      &:hover {
+        color: var(--global-hover-color);
+      }
     }
   }
 

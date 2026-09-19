@@ -11,6 +11,6 @@ class PageTitleTest < Minitest::Test
     assert_includes default_layout, '{% if page.url != \'/\' %}non-home-page {% endif %}'
     assert_includes distill_layout, '{% if page.url != \'/\' %}non-home-page {% endif %}'
     assert_includes distill_layout, '<h1 class="post-title">{{ page.title }}</h1>'
-    assert_includes styles, "body.non-home-page .post-title {\n  font-weight: 400;\n}"
+    assert_includes styles, "body.non-home-page .post-title {\n  font-weight: 400;\n  text-transform: capitalize;\n}"
   end
 end
