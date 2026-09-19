@@ -132,18 +132,19 @@
               </button>
             </li>
           {% endif %}
-          {% if site.enable_navbar_social %}
-            <!-- Social Icons -->
-            <li class="navbar-social-links" role="group" aria-label="Social links">{% social_links %}</li>
-          {% endif %}
-          {% if site.enable_darkmode %}
-            <!-- Toogle theme mode -->
-            <li class="toggle-container">
-              <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme">
-                <i class="fa-half-sun-moon" id="light-toggle-system"></i>
-                <i class="fa-solid fa-moon" id="light-toggle-dark"></i>
-                <i class="fa-solid fa-sun" id="light-toggle-light"></i>
-              </button>
+          {% if site.enable_navbar_social or site.enable_darkmode %}
+            <!-- Social and theme controls -->
+            <li class="navbar-social-links" role="group" aria-label="Social links and theme">
+              {% if site.enable_navbar_social %}
+                {% social_links %}
+              {% endif %}
+              {% if site.enable_darkmode %}
+                <button id="light-toggle" type="button" title="Change theme" aria-label="Change color theme">
+                  <i class="fa-half-sun-moon" id="light-toggle-system"></i>
+                  <i class="fa-solid fa-moon" id="light-toggle-dark"></i>
+                  <i class="fa-solid fa-sun" id="light-toggle-light"></i>
+                </button>
+              {% endif %}
             </li>
           {% endif %}
         </ul>

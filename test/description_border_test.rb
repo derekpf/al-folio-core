@@ -24,6 +24,7 @@ class DescriptionBorderTest < Minitest::Test
     assert_includes declaration, "width: fit-content;"
     assert_includes declaration, "max-width: 100%;"
     assert_includes declaration, "box-sizing: border-box;"
+    assert_includes declaration, "border-radius: 0.25rem;"
     assert_includes declaration, "0 2px 5px 0 rgba(0, 0, 0, 0.16),"
     assert_includes declaration, "0 2px 10px 0 rgba(0, 0, 0, 0.12);"
     assert_includes declaration, "border-color 0.2s ease,"
@@ -132,19 +133,14 @@ class DescriptionBorderTest < Minitest::Test
     assert_includes styles, ".row > .experience-location-column > .description-border"
   end
 
-  def test_paired_components_share_the_hover_animation
+  def test_hover_animation_is_limited_to_the_hovered_component
     styles = ROOT.join("_sass/_utilities.scss").read
 
-    assert_includes styles, ".row > .abbr:is(:hover, :focus-within) + [class*='col-'] > .description-border"
-    assert_includes styles, ".row > .abbr:has(+ [class*='col-'] > .description-border:is(:hover, :focus-within)) img"
-    assert_includes styles, ".row > .date-column:has(+ [class*='col-'] > .description-border:is(:hover, :focus-within)) .description-border"
-    assert_includes styles, ".row > .experience-location-column:has(+ .experience-details > .description-border:is(:hover, :focus-within)) .description-border"
-    assert_includes styles, ".row > .experience-location-column:has(+ .experience-details > .description-border:is(:hover, :focus-within)) .experience-location-text"
-    assert_includes styles, ".row:has(> .abbr + [class*='col-']):is(:hover, :focus-within) > .abbr img"
-    assert_includes styles, ".row:has(> .abbr + [class*='col-']):is(:hover, :focus-within) > [class*='col-'] > .description-border"
-    assert_includes styles, ".row:has(> .date-column + [class*='col-']):is(:hover, :focus-within) > .date-column > .description-border"
-    assert_includes styles, ".row:has(> .experience-location-column + .experience-details):is(:hover, :focus-within) > .experience-location-column > .description-border"
-    assert_includes styles, ".row:has(> .experience-location-column + .experience-details):is(:hover, :focus-within) > .experience-location-column .experience-location-text"
+    assert_includes styles, ".description-border:hover"
+    assert_includes styles, ".description-border:focus-within"
+    refute_includes styles, ".row:has("
+    refute_includes styles, ".row > .abbr:is(:hover, :focus-within) +"
+    refute_includes styles, ".row > .experience-location-column:is(:hover, :focus-within) +"
   end
 
   def test_publication_and_project_renderers_use_the_shared_wrapper

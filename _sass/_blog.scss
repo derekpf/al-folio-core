@@ -225,6 +225,8 @@ body:not(.non-home-page) {
 
 .about-section-heading {
   margin-top: 0;
+  width: fit-content;
+  max-width: 100%;
   text-transform: capitalize;
   transition: color 0.1s ease-in-out;
 

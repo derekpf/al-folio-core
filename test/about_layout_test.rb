@@ -74,7 +74,7 @@ class AboutLayoutTest < Minitest::Test
     assert_equal 4, layout.scan('<h2 class="about-section-heading">').length
     assert_includes layout, '<h2 class="about-section-heading previous-role-heading">'
     assert_includes blog_styles, ".about-section {\n  display: flow-root;\n  padding-top: 3rem;\n}"
-    assert_match(/\.about-section-heading \{\s+margin-top: 0;\s+text-transform: capitalize;/, blog_styles)
+    assert_match(/\.about-section-heading \{\s+margin-top: 0;\s+width: fit-content;\s+max-width: 100%;\s+text-transform: capitalize;/, blog_styles)
     refute_includes blog_styles, "project-highlights-heading"
   end
 
