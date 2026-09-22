@@ -9,7 +9,7 @@ class DescriptionBorderTest < Minitest::Test
     _includes/projects_horizontal.liquid
   ].freeze
 
-  def test_description_border_is_a_shrink_wrapped_entry_border
+  def test_description_border_fills_its_assigned_column
     styles = ROOT.join("_sass/_utilities.scss").read
     declaration = styles[/\.description-border\s*\{(.*?)\n\}/m, 1]
 
@@ -21,7 +21,7 @@ class DescriptionBorderTest < Minitest::Test
     assert_includes declaration, "padding: calc(0.25rem + 5px) 0.5rem;"
     assert_includes declaration, "margin-top: -0.25rem;"
     assert_includes declaration, "display: inline-block;"
-    assert_includes declaration, "width: fit-content;"
+    assert_includes declaration, "width: 100%;"
     assert_includes declaration, "max-width: 100%;"
     assert_includes declaration, "box-sizing: border-box;"
     assert_includes declaration, "border-radius: 0.25rem;"
