@@ -3,9 +3,43 @@
   {% if page.layout == 'about' %}
     {% assign is_about_page = true %}
   {% endif %}
+  {% assign show_hand_cube = false %}
+  {% if is_about_page and page.leap_hand_cube %}
+    {% assign show_hand_cube = true %}
+  {% endif %}
+
+  {% if show_hand_cube %}
+    <!-- About hero: the navbar floats over this band until it scrolls away -->
+    <div id="about-hero" class="about-hero">
+      <div class="container about-hero-inner">
+        <canvas
+          id="hand-cube-canvas"
+          class="hand-cube-canvas"
+          role="img"
+          aria-label="A robot hand holding a Rubik's cube. Click one of the cube's lower faces to roll it onto the palm, or the top face to spin it."
+        ></canvas>
+        <p id="hand-cube-hint" class="hand-cube-hint" aria-hidden="true">click a face</p>
+        {% if page.hero_skills %}
+          <!-- skill tags, under the section links; each is nudged a little off the flow so they scatter -->
+          <ul id="hero-skills" class="hero-skills" aria-label="Skills">
+            {% for skill in page.hero_skills %}
+              {% assign dx = forloop.index | times: 5 | modulo: 11 | minus: 5 %}
+              {% assign dy = forloop.index | times: 7 | modulo: 15 | minus: 7 %}
+              <li class="hero-skill" style="--dx: {{ dx }}; --dy: {{ dy }}">{{ skill }}</li>
+            {% endfor %}
+          </ul>
+        {% endif %}
+      </div>
+    </div>
+    <script type="module" src="{{ '/assets/js/hand-cube.js' | relative_url | bust_file_cache }}"></script>
+  {% endif %}
 
   <!-- Nav Bar -->
-  <nav id="navbar" class="navbar navbar-light navbar-expand-sm {% if site.navbar_fixed %}fixed-top{% else %}sticky-top{% endif %}" role="navigation">
+  <nav
+    id="navbar"
+    class="navbar navbar-light navbar-expand-sm {% if site.navbar_fixed %}fixed-top{% else %}sticky-top{% endif %}{% if show_hand_cube %} navbar-over-hero{% endif %}"
+    role="navigation"
+  >
     <div class="container">
       {% unless is_about_page %}
         <span class="navbar-brand title font-weight-lighter">

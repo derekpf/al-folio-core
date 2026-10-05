@@ -276,3 +276,147 @@
     color: var(--global-hover-color);
   }
 }
+
+/*******************************************************************************
+ * About hero (page.leap_hand_cube): a taller band under a transparent navbar.
+ * Once the band has scrolled under the navbar, `.is-past-hero` restores the
+ * usual opaque bar and its border.
+ ******************************************************************************/
+
+$about-hero-height: 260px;
+$about-hero-height-sm: 210px;
+
+body.has-about-hero {
+  padding-top: $about-hero-height;
+}
+
+.about-hero {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: $about-hero-height;
+  border-bottom: 1px solid var(--global-divider-color);
+  background-color: var(--global-bg-color);
+}
+
+.about-hero-inner {
+  position: relative;
+  height: 100%;
+}
+
+.hand-cube-canvas {
+  position: absolute;
+  left: 0;
+  top: 0;
+  display: block;
+  width: min(620px, 100%);
+  height: 100%;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+  touch-action: manipulation;
+
+  &.is-ready {
+    opacity: 1;
+  }
+}
+
+// Small pill centred above the cube (the script places it), faded out while the cube turns
+// and while a preview arrow shows in its place.
+.hand-cube-hint {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translate(-50%, calc(-100% - 0.45rem));
+  margin: 0;
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 999px;
+  background-color: var(--global-bg-color);
+  color: var(--global-text-color-light);
+  font-size: 0.78rem;
+  white-space: nowrap;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.4s ease;
+
+  .hand-cube-canvas.is-ready + & {
+    opacity: 1;
+  }
+
+  &.is-moving,
+  &.is-covered {
+    opacity: 0 !important;
+  }
+}
+
+// Skill tags scattered under the section links, in the same pill style as the hint. The
+// script lines their left edge up with the first link; without it they take the right side.
+.hero-skills {
+  position: absolute;
+  top: 3.7rem;
+  right: 0;
+  bottom: 1rem;
+  width: 23rem;
+  margin: 0;
+  padding: 0 0.25rem;
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-content: space-evenly;
+  gap: 0.35rem 0.55rem;
+  pointer-events: none;
+}
+
+.hero-skill {
+  padding: 0.2rem 0.7rem;
+  border: 1px solid var(--global-divider-color);
+  border-radius: 999px;
+  background-color: var(--global-bg-color);
+  color: var(--global-text-color-light);
+  font-size: 0.78rem;
+  line-height: 1.5;
+  white-space: nowrap;
+  // a small fixed nudge per tag (set in the markup) breaks up the rows
+  transform: translate(calc(var(--dx, 0) * 1px), calc(var(--dy, 0) * 1px));
+}
+
+.navbar.navbar-over-hero {
+  transition:
+    background-color 0.2s ease,
+    border-color 0.2s ease;
+
+  &:not(.is-past-hero) {
+    background-color: transparent;
+    border-bottom-color: transparent;
+    // Let clicks through to the canvas everywhere except the nav controls.
+    pointer-events: none;
+
+    .navbar-toggler,
+    .navbar-nav,
+    .navbar-collapse.show {
+      pointer-events: auto;
+    }
+
+    .navbar-collapse.show {
+      background-color: var(--global-bg-color);
+    }
+  }
+}
+
+@media (max-width: 575.98px) {
+  body.has-about-hero {
+    padding-top: $about-hero-height-sm;
+  }
+
+  .about-hero {
+    height: $about-hero-height-sm;
+  }
+
+  // the drawing fills the narrow band, so there is no room beside it
+  .hand-cube-hint,
+  .hero-skills {
+    display: none;
+  }
+}
